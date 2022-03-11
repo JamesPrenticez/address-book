@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Models\Item;
 
 class ItemController extends Controller
@@ -73,7 +74,17 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $existingItem = Item::find( $id );
+
+        if( $existingItem ){
+            $existingItem->name = $request->item["name"];
+            $existingItem->completed = $request->item["completed"] ? true : false;
+            $existingItem->completed_at = $request->item["completed"] ? Carbon::now() : null;
+            $existingItem->save(); //not sure if we need this? ... but it works
+            return $existingItem;
+        }
+
+        return "Item not found";
     }
 
     /**
@@ -82,8 +93,14 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id) //in postman use a POST request idk why not a DELTE?
     {
-        //
+        $existingItem = Item::find( $id );
+
+        if( $existingItem ){
+            $existingItem->delete();
+            return "Item successfully deleted";
+        }
+        return "Item not found";
     }
 }
