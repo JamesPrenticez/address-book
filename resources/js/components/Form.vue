@@ -3,15 +3,15 @@
   <div class='addItemContainer'>
     <div class="item">
       <label for="fname">First name:</label>
-      <input type='text' name="fname" placeholder="John" />
+      <input type='text' name="fname" placeholder="John" v-model="item.name" />
     </div>
     <div class="item">
       <label for="lname">Last name:</label>
-      <input type='text' name="fname" />
+      <input type='text' name="lname" placeholder="Doe"/>
     </div>
     <div class="item">
       <label for="phnumber">Phone Number:</label>
-      <input type='text' name="phnumber" />
+      <input type='text' name="phnumber" placeholder="0800 83 83 83" />
     </div>
     <div class="item">
       <label for="dob">Date Of Birth:</label>
@@ -19,9 +19,12 @@
     </div>
     <div class="item">
       <label for="address">Address:</label>
-      <input type='text' name="address" />
+      <input type='text' name="address" placeholder="123 Fake Street" />
     </div>
-    <div class="btn">
+    <div 
+      :class="[ item.name ? 'active' : 'inactive', 'btn' ]"
+      @click="addItem()"
+    >
       Add
     </div>
 
@@ -30,11 +33,42 @@
 </template>
 
 <script>
-  export default {}
+  export default {
+    data: function(){
+      return{
+        item: {
+          name: ""
+        }
+      }
+    },
+    methods:{
+      addItem(){
+        if(this.item.name == ""){
+          return
+        }
+        axios.post('api/item/store', {
+          item: this.item,
+        }).then( responce => {
+          if(responce.status == 201){
+            this.item.name = "";
+          }
+        })
+        .catch( error => {
+          console.log(error);
+        })
+      }
+    }
+  }
 </script>
 
 <style>
+  .active{
+    border: solid 3px green !important;
+  }
 
+  .inactive{
+    border: solid 3px rgb(168 85 247);
+  }
 
   .addItemContainer{
     display: flex;
@@ -56,7 +90,6 @@
     width: 100%;
     color: rgb(168 85 247);
     background: white;
-    border: solid 3px rgb(168 85 247);
   }
 
   .btn:hover{
