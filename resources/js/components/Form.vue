@@ -1,5 +1,5 @@
 <template>
-  <h1>Add New Contact</h1>
+  <h1 class="heading">Add New Contact</h1>
   <div class='addItemContainer'>
     <div class="item">
       <label for="fname">First name:</label>
@@ -15,7 +15,7 @@
     </div>
     <div class="item">
       <label for="dob">Date Of Birth:</label>
-      <input type='date' name="dob" />
+      <input type='date' name="dob" placeholder=""/>
     </div>
     <div class="item">
       <label for="address">Address:</label>
@@ -61,7 +61,15 @@
   }
 </script>
 
-<style>
+<style scoped>
+  .heading{
+    color:white;
+    padding: 5px;
+    margin-bottom: 5px;
+    background: rgb(168 85 247);
+  }
+
+
   .active{
     border: solid 3px green !important;
   }
@@ -87,7 +95,8 @@
     align-items: center;
     justify-content: center;
     padding: 5px;
-    width: 100%;
+    margin-left: auto;
+    width: 50%;
     color: rgb(168 85 247);
     background: white;
   }
@@ -105,14 +114,9 @@
 
   input{
     width: 50%;
-    background: rgb(192 132 252);
+    background: rgb(209 213 219);
     border: 0px;
     outline: none;
     padding: 5px;
-    color: white;
-  }
-  
-  input::placeholder {
-    color: white;
   }
 </style>

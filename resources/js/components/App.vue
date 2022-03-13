@@ -4,7 +4,7 @@
       <h1 class='title'>Address Book</h1>
     </div>
       <Form />
-      <ListView />
+      <ListView :items="items"/>
   </div>
 </template>
 
@@ -15,6 +15,25 @@
     components: {
       Form,
       ListView
+    },
+    data: function(){
+      return{
+        items: []
+      }
+    },
+    methods:{
+      getList(){
+        axios.get("api/items")
+        .then( responce => {
+          this.items = responce.data
+        })
+        .catch( error => {
+          console.log( error );
+        })
+      }
+    },
+    created(){
+      this.getList();
     }
   }
 </script>
@@ -28,7 +47,7 @@
   }
 
   .header{
-    background: rgb(168 85 247);
+    background: rgb(147 51 234);
     padding: 15px;
     color: white;
   }

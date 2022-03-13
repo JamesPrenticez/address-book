@@ -1,7 +1,18 @@
 <template>
-  <h1>List Item</h1>
+  <div class="item">
+    <span>{{ item.name }}</span>
+  </div>
 </template>
 
 <script>
-  export default {}
+  export default {
+    props: ['item']
+  }
 </script>
+
+<style scoped>
+
+  .item{
+    padding: 5px;
+  }
+</style>
